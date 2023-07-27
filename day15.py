@@ -1,3 +1,5 @@
+'''Coffee Machine'''
+
 MENU = {
     "espresso": {
         "ingredients": {
@@ -40,16 +42,17 @@ def report():
 
 
 def enough_resources(order):
-    '''checks if there are enough resources to prepare the given order (returns 0 if resources insufficient)'''
+    '''checks if there are enough resources to prepare the given order 
+    (returns 0 if resources insufficient)'''
     for x in MENU[order]['ingredients']:
         if resources[x] < MENU[order]['ingredients'][x]:
             return 0
     return 1
 
 
-def process_coins(order):
-    global profit
+def process_coins(order):    
     '''Takes the coin input from the user and subtracts cost of order and returns the change'''
+    global profit
     print("Please insert coins.")
     rupees = int(input("How many rupees?: "))
     # aathane is half of a rupee or 50 paise
@@ -70,6 +73,7 @@ def process_coins(order):
 
 
 def prepare_order(order):
+    '''A function to prepare order, which is taken as parameter'''
     for item in resources:
         if(item == "milk" and order == "espresso"):
             continue
@@ -77,34 +81,40 @@ def prepare_order(order):
     print(f"Here's your {order}. Enjoy! ")
 
 
-while(True):
-    user_input = input(
-        '''What would you like?
-             A - Espresso
-             B - Latte
-             C - Cappuccino: 
-             ''')
+def main():
+    '''A function that's main'''
+    while(True):
+        user_input = input(
+            '''What would you like?
+                A - Espresso
+                B - Latte
+                C - Cappuccino: 
+                ''')
 
-    if(user_input == "off"):
-        break
-    if(user_input == "report"):
-        report()
-        continue
-    if(user_input == "A"):
-        order = "espresso"
-    elif(user_input == "B"):
-        order = "latte"
-    elif(user_input == "C"):
-        order = "cappuccino"
-    enough_resources_val = enough_resources(order)
+        if(user_input == "off"):
+            break
+        if(user_input == "report"):
+            report()
+            continue
+        if(user_input == "A"):
+            order = "espresso"
+        elif(user_input == "B"):
+            order = "latte"
+        elif(user_input == "C"):
+            order = "cappuccino"
+        enough_resources_val = enough_resources(order)
 
-    if enough_resources_val == 0:
-        print("Sorry! We don't have enough resources, \nMaintainer of the machine has been informed.")
-        continue
+        if enough_resources_val == 0:
+            print(
+                "Sorry! We don't have enough resources, \nMaintainer of the machine has been informed.")
+            continue
 
-    process_coins_val = process_coins(order)
+        process_coins_val = process_coins(order)
 
-    if process_coins_val == 0:
-        continue
+        if process_coins_val == 0:
+            continue
 
-    prepare_order(order)
+        prepare_order(order)
+
+if __name__ =="__main__":
+    main()
